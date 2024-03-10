@@ -1,13 +1,11 @@
 package com.fokal.rideshare.controller;
 
+import com.fokal.rideshare.dto.RideCreateRequest;
 import com.fokal.rideshare.dto.RideGetAllResponse;
 import com.fokal.rideshare.dto.RideGetResponse;
 import com.fokal.rideshare.service.RideService;
 import lombok.AllArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +25,10 @@ public class RideController {
         @GetMapping("{id}")
         public RideGetResponse getRideById(@PathVariable Long id) {
             return rideService.getRideById(id);
+        }
+
+        @PostMapping("")
+        public RideGetResponse createRide(@RequestBody RideCreateRequest rideCreateRequest) {
+            return rideService.createRide(rideCreateRequest);
         }
 }
