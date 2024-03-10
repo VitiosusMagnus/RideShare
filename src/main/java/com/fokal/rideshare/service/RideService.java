@@ -1,6 +1,7 @@
 package com.fokal.rideshare.service;
 
 import com.fokal.rideshare.dto.RideGetAllResponse;
+import com.fokal.rideshare.dto.RideGetResponse;
 import com.fokal.rideshare.repository.RideRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -20,5 +21,9 @@ public class RideService {
         return rideRepository.findAllByActiveIsTrue().stream()
                 .map(ride -> modelMapper.map(ride, RideGetAllResponse.class))
                 .toList();
+    }
+
+    public RideGetResponse getRideById(Long id) {
+        return modelMapper.map(rideRepository.findById(id).orElseThrow(), RideGetResponse.class);
     }
 }
