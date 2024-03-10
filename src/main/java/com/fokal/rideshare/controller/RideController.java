@@ -36,4 +36,9 @@ public class RideController {
         public void deleteRide(@PathVariable Long id) {
             rideService.deleteRide(id);
         }
+
+        @PutMapping("{id}")
+        public void updateRide(@PathVariable Long id, @RequestBody RideCreateRequest rideCreateRequest) {
+            rideService.updateRide(id, rideCreateRequest);
+        }
 }
