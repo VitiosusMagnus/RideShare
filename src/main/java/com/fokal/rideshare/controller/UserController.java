@@ -3,6 +3,7 @@ package com.fokal.rideshare.controller;
 import com.fokal.rideshare.dto.UserCreateRequest;
 import com.fokal.rideshare.dto.UserGetAllResponse;
 import com.fokal.rideshare.dto.UserGetResponse;
+import com.fokal.rideshare.dto.UserUpdateRequest;
 import com.fokal.rideshare.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -34,5 +35,10 @@ public class UserController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
+    }
+
+    @PutMapping("/{id}")
+    public UserGetResponse updateUser(@PathVariable Long id, @RequestBody UserUpdateRequest userUpdateRequest){
+        return userService.updateUser(id, userUpdateRequest);
     }
 }
