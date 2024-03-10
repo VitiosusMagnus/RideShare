@@ -5,7 +5,6 @@ import com.fokal.rideshare.dto.RideGetAllResponse;
 import com.fokal.rideshare.dto.RideGetResponse;
 import com.fokal.rideshare.service.RideService;
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
