@@ -31,4 +31,9 @@ public class RideController {
         public RideGetResponse createRide(@RequestBody RideCreateRequest rideCreateRequest) {
             return rideService.createRide(rideCreateRequest);
         }
+
+        @DeleteMapping("{id}")
+        public void deleteRide(@PathVariable Long id) {
+            rideService.deleteRide(id);
+        }
 }

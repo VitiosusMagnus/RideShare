@@ -33,4 +33,11 @@ public class RideService {
     public RideGetResponse createRide(RideCreateRequest rideCreateRequest) {
         return modelMapper.map(rideRepository.save(modelMapper.map(rideCreateRequest, Ride.class)), RideGetResponse.class);
     }
+
+    public void deleteRide(Long id) {
+        rideRepository.findById(id).ifPresent(ride -> {
+            ride.setActive(false);
+            rideRepository.save(ride);
+        });
+    }
 }
