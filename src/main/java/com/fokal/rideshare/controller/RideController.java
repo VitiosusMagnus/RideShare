@@ -22,7 +22,7 @@ public class RideController {
             return rideService.getAllRides();
         }
 
-        @GetMapping("{id}")
+        @GetMapping("/{id}")
         public RideGetResponse getRideById(@PathVariable Long id) {
             return rideService.getRideById(id);
         }
@@ -32,12 +32,12 @@ public class RideController {
             return rideService.createRide(rideCreateRequest);
         }
 
-        @DeleteMapping("{id}")
+        @DeleteMapping("/{id}")
         public void deleteRide(@PathVariable Long id) {
             rideService.deleteRide(id);
         }
 
-        @PutMapping("{id}")
+        @PutMapping("/{id}")
         public void updateRide(@PathVariable Long id, @RequestBody RideCreateRequest rideCreateRequest) {
             rideService.updateRide(id, rideCreateRequest);
         }
