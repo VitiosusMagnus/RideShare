@@ -39,10 +39,7 @@ public class UserService {
 
     public UserGetResponse updateUser(Long id, UserUpdateRequest userUpdateRequest) {
         User user = userRepository.findById(id).orElseThrow();
-        user.setName(userUpdateRequest.getName());
-        user.setEmail(userUpdateRequest.getEmail());
-        user.setPassword(userUpdateRequest.getPassword());
-        user.setPhone(userUpdateRequest.getPhone());
+        modelMapper.map(userUpdateRequest, user);
         return modelMapper.map(userRepository.save(user), UserGetResponse.class);
     }
 }
