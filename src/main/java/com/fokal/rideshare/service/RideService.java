@@ -44,12 +44,7 @@ public class RideService {
 
     public void updateRide(Long id, RideCreateRequest rideCreateRequest) {
         rideRepository.findById(id).ifPresent(ride -> {
-            ride.setDirection(rideCreateRequest.getDirection());
-            ride.setDepartureTime(rideCreateRequest.getDepartureTime());
-            ride.setAvailableSeats(rideCreateRequest.getAvailableSeats());
-            ride.setTotalSeats(rideCreateRequest.getTotalSeats());
-            ride.setPrice(rideCreateRequest.getPrice());
-            rideRepository.save(ride);
+            rideRepository.save(modelMapper.map(rideCreateRequest,Ride.class));
         });
     }
 }
