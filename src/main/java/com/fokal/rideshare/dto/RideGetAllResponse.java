@@ -1,9 +1,15 @@
 package com.fokal.rideshare.dto;
 
 import com.fokal.rideshare.model.Direction;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RideGetAllResponse {
     private Long id;
     private Direction direction;
