@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -19,14 +20,18 @@ public class RideService {
     private final ModelMapper modelMapper;
 
 
-    public List<RideGetAllResponse> getAllRides() {
-        return rideRepository.findAllByIsActiveTrue().stream()
+    public List<RideGetAllResponse> getAllActiveRides() {
+        return rideRepository.findAllByActiveIsTrue().stream()
                 .map(ride -> modelMapper.map(ride, RideGetAllResponse.class))
                 .toList();
     }
 
     public RideGetResponse getRideById(Long id) {
-        return modelMapper.map(rideRepository.findById(id).orElseThrow(), RideGetResponse.class);
+        Optional<Ride> ride = rideRepository.findById(id);
+        if (ride.isPresent() && ride.get().isActive()) {
+            return modelMapper.map(ride.get(), RideGetResponse.class);
+        }
+        throw new RuntimeException("Ride not found with id: " + id);
     }
 
 
@@ -34,7 +39,7 @@ public class RideService {
         return modelMapper.map(rideRepository.save(modelMapper.map(rideCreateRequest, Ride.class)), RideGetResponse.class);
     }
 
-    public void deleteRide(Long id) {
+    public void softDeleteRide(Long id) {
         rideRepository.findById(id).ifPresent(ride -> {
             ride.setActive(false);
             rideRepository.save(ride);

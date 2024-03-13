@@ -24,7 +24,7 @@ public class Ride {
     private int price;
     private boolean isActive;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     @JoinColumn(name = "driver_id")
     private User driver;
 }

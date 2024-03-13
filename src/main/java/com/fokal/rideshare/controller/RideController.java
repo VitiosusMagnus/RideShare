@@ -19,7 +19,7 @@ public class RideController {
 
         @GetMapping("")
         public List<RideGetAllResponse> getAllRides() {
-            return rideService.getAllRides();
+            return rideService.getAllActiveRides();
         }
 
         @GetMapping("/{id}")
@@ -34,7 +34,7 @@ public class RideController {
 
         @DeleteMapping("/{id}")
         public void deleteRide(@PathVariable Long id) {
-            rideService.deleteRide(id);
+            rideService.softDeleteRide(id);
         }
 
         @PutMapping("/{id}")
