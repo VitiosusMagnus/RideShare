@@ -21,7 +21,7 @@ public class RideService {
 
 
     public List<RideGetAllResponse> getAllActiveRides() {
-        return rideRepository.findAllByActiveIsTrue().stream()
+        return rideRepository.findAllByIsActiveTrue().stream()
                 .map(ride -> modelMapper.map(ride, RideGetAllResponse.class))
                 .toList();
     }
