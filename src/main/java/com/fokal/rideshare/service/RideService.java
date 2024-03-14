@@ -36,7 +36,9 @@ public class RideService {
 
 
     public RideGetResponse createRide(RideCreateRequest rideCreateRequest) {
-        return modelMapper.map(rideRepository.save(modelMapper.map(rideCreateRequest, Ride.class)), RideGetResponse.class);
+        Ride ride = modelMapper.map(rideCreateRequest, Ride.class);
+        ride.setActive(true);
+        return modelMapper.map(rideRepository.save(ride), RideGetResponse.class);
     }
 
     public void softDeleteRide(Long id) {
