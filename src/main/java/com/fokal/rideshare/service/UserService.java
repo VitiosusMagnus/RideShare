@@ -8,6 +8,7 @@ import com.fokal.rideshare.model.User;
 import com.fokal.rideshare.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<UserGetAllResponse> getAllUsers() {
         return userRepository.findAll().stream()
@@ -30,7 +32,9 @@ public class UserService {
     }
 
     public UserGetResponse createUser(UserCreateRequest userCreateRequest) {
-        return modelMapper.map(userRepository.save(modelMapper.map(userCreateRequest, User.class)), UserGetResponse.class);
+        User user = modelMapper.map(userCreateRequest, User.class);
+        user.setPassword(bCryptPasswordEncoder.encode(userCreateRequest.getPassword()));
+        return modelMapper.map(userRepository.save(user), UserGetResponse.class);
     }
 
     public void deleteUser(Long id) {

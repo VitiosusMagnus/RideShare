@@ -19,7 +19,11 @@ public class User {
     private String name;
     private String email;
     private String phone;
+    private String password;
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     private List<Ride> rides;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Role> roles;
 }
