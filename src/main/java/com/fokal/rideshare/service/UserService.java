@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -22,13 +23,13 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public List<UserGetAllResponse> getAllUsers() {
-        return userRepository.findAll().stream()
+        return userRepository.findAllByIsActiveTrue().stream()
                 .map(user -> modelMapper.map(user, UserGetAllResponse.class))
                 .toList();
     }
 
     public UserGetResponse getUserById(Long id) {
-        return modelMapper.map(userRepository.findById(id).orElseThrow(), UserGetResponse.class);
+        return modelMapper.map(userRepository.findByIdAndIsActiveTrue(id).orElseThrow(), UserGetResponse.class);
     }
 
     public UserGetResponse createUser(UserCreateRequest userCreateRequest) {
@@ -38,7 +39,14 @@ public class UserService {
     }
 
     public void deleteUser(Long id) {
-        userRepository.deleteById(id);
+        Optional<User> temp = userRepository.findById(id);
+
+        if(temp.isEmpty()){
+            throw new RuntimeException("User Not Found");
+        }
+        User user = temp.get();
+        user.setActive(false);
+        userRepository.save(user);
     }
 
     public UserGetResponse updateUser(Long id, UserUpdateRequest userUpdateRequest) {

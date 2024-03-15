@@ -20,6 +20,7 @@ public class User {
     private String email;
     private String phone;
     private String password;
+    private boolean isActive;
 
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
     private List<Ride> rides;
