@@ -35,6 +35,7 @@ public class UserService {
     public UserGetResponse createUser(UserCreateRequest userCreateRequest) {
         User user = modelMapper.map(userCreateRequest, User.class);
         user.setPassword(bCryptPasswordEncoder.encode(userCreateRequest.getPassword()));
+        user.setActive(true);
         return modelMapper.map(userRepository.save(user), UserGetResponse.class);
     }
 
