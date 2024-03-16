@@ -22,9 +22,20 @@ public class User {
     private String password;
     private boolean isActive;
 
+    //for rides
     @OneToMany(mappedBy = "driver", fetch = FetchType.LAZY)
-    private List<Ride> rides;
+    private List<Ride> owningRides;
 
+    @ManyToMany(mappedBy = "passengers", fetch = FetchType.LAZY)
+    private List<Ride> joinedRides;
+
+    //for ride proxies
+    @ManyToMany(mappedBy = "users", fetch = FetchType.LAZY)
+    private List<WaitingRoom> waitingRooms;
+
+
+
+    //security
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Role> roles;
 

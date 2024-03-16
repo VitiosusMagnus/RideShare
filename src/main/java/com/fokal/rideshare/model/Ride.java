@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -27,4 +28,15 @@ public class Ride {
     @ManyToOne()
     @JoinColumn(name = "driver_id")
     private User driver;
+
+    @ManyToMany()
+    @JoinTable(
+            name = "ride_passenger",
+            joinColumns = @JoinColumn(name = "ride_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    List<User> passengers;
+
+    @OneToOne(mappedBy = "ride")
+    private WaitingRoom waitingRoom;
 }
