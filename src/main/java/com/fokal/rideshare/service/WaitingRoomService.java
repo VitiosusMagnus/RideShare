@@ -1,13 +1,11 @@
 package com.fokal.rideshare.service;
 
-import com.fokal.rideshare.model.Ride;
 import com.fokal.rideshare.model.User;
 import com.fokal.rideshare.model.WaitingRoom;
 import com.fokal.rideshare.repository.WaitingRoomRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service

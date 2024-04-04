@@ -33,7 +33,6 @@ public class RideService {
         if (ride.isPresent() && ride.get().isActive()) {
             return modelMapper.map(ride.get(), RideGetResponse.class);
         }
-        //TODO: exception handling
         throw new RuntimeException("Ride not found with id: " + id);
     }
 
