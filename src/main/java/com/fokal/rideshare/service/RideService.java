@@ -64,15 +64,18 @@ public class RideService {
         waitingRoomService.joinWaitingRoom(id, userId);
     }
 
-    public void leaveWaitingRoom(Long id, Long userId) {
+    public void leave(Long id, Long userId) {
         waitingRoomService.leaveWaitingRoom(id, userId);
+        Optional<Ride> Ride = rideRepository.findById(id);
+        if (Ride.isPresent()){
+            Ride.get().getPassengers().removeIf(user -> user.getId().equals(userId));
+        }
     }
 
     public void acceptRide(Long id, Long userId) {
         WaitingRoom waitingRoom = waitingRoomService.getWaitingRoomByRideId(id);
         if(waitingRoom.getUsers().removeIf(user -> user.getId().equals(userId))){
             waitingRoomService.saveWaitingRoom(waitingRoom);
-            leaveWaitingRoom(id, userId);
         }
 
        }

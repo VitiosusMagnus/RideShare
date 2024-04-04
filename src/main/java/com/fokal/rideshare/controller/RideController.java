@@ -49,7 +49,7 @@ public class RideController {
 
         @PostMapping("/{id}/leave")
         public void leaveRide(@PathVariable Long id, @RequestBody Long userId) {
-            rideService.leaveWaitingRoom(id, userId);
+            rideService.leave(id, userId);
         }
 
         @PostMapping("/{id}/accept")
