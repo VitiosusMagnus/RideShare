@@ -4,6 +4,7 @@ import com.fokal.rideshare.dto.RideCreateRequest;
 import com.fokal.rideshare.dto.RideGetAllResponse;
 import com.fokal.rideshare.dto.RideGetResponse;
 import com.fokal.rideshare.model.Ride;
+import com.fokal.rideshare.model.WaitingRoom;
 import com.fokal.rideshare.repository.RideRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -18,6 +19,7 @@ public class RideService {
 
     private final RideRepository rideRepository;
     private final ModelMapper modelMapper;
+    private final WaitingRoomService waitingRoomService;
 
 
     public List<RideGetAllResponse> getAllActiveRides() {
@@ -31,6 +33,7 @@ public class RideService {
         if (ride.isPresent() && ride.get().isActive()) {
             return modelMapper.map(ride.get(), RideGetResponse.class);
         }
+        //TODO: exception handling
         throw new RuntimeException("Ride not found with id: " + id);
     }
 
@@ -38,6 +41,9 @@ public class RideService {
     public RideGetResponse createRide(RideCreateRequest rideCreateRequest) {
         Ride ride = modelMapper.map(rideCreateRequest, Ride.class);
         ride.setActive(true);
+        WaitingRoom waitingRoom = new WaitingRoom();
+        waitingRoom.setRide(ride);
+        waitingRoomService.createWaitingRoom(waitingRoom);
         return modelMapper.map(rideRepository.save(ride), RideGetResponse.class);
     }
 
@@ -54,4 +60,21 @@ public class RideService {
             rideRepository.save(modelMapper.map(rideCreateRequest,Ride.class));
         });
     }
+
+    public void joinWaitingRoom(Long id, Long userId) {
+        waitingRoomService.joinWaitingRoom(id, userId);
+    }
+
+    public void leaveWaitingRoom(Long id, Long userId) {
+        waitingRoomService.leaveWaitingRoom(id, userId);
+    }
+
+    public void acceptRide(Long id, Long userId) {
+        WaitingRoom waitingRoom = waitingRoomService.getWaitingRoomByRideId(id);
+        if(waitingRoom.getUsers().removeIf(user -> user.getId().equals(userId))){
+            waitingRoomService.saveWaitingRoom(waitingRoom);
+            leaveWaitingRoom(id, userId);
+        }
+
+       }
 }

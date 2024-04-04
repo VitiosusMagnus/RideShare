@@ -41,4 +41,20 @@ public class RideController {
         public void updateRide(@PathVariable Long id, @RequestBody RideCreateRequest rideCreateRequest) {
             rideService.updateRide(id, rideCreateRequest);
         }
+
+        @PostMapping("/{id}/join")
+        public void joinRide(@PathVariable Long id, @RequestBody Long userId) {
+            rideService.joinWaitingRoom(id, userId);
+        }
+
+        @PostMapping("/{id}/leave")
+        public void leaveRide(@PathVariable Long id, @RequestBody Long userId) {
+            rideService.leaveWaitingRoom(id, userId);
+        }
+
+        @PostMapping("/{id}/accept")
+        public void acceptRide(@PathVariable Long id, @RequestBody Long userId) {
+            rideService.acceptRide(id, userId);
+        }
+
 }
