@@ -79,4 +79,8 @@ public class RideService {
         }
 
        }
+
+    public void getWaitingRoomByRideId(Long id) {
+        waitingRoomService.getWaitingRoomByRideId(id);
+    }
 }

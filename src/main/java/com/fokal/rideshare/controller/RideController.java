@@ -57,4 +57,9 @@ public class RideController {
             rideService.acceptRide(id, userId);
         }
 
+        @GetMapping("/{id}/waiting-room")
+        public void getWaitingRoom(@PathVariable Long id) {
+            rideService.getWaitingRoomByRideId(id);
+        }
+
 }
