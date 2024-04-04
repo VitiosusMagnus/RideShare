@@ -15,9 +15,9 @@ public class MessageController {
 
         private final MessageService messageService;
 
-        @GetMapping("/{user1Id}/{user2Id}")
-        public List<MessageGetResponse> getMessages(@PathVariable Long user1Id, @PathVariable Long user2Id) {
-            return messageService.getMessages(user1Id, user2Id);
+        @GetMapping("/{user1Id}/{user2Id}/{page}")
+        public List<MessageGetResponse> getMessages(@PathVariable Long user1Id, @PathVariable Long user2Id, @PathVariable Integer page){
+            return messageService.getMessages(user1Id, user2Id, page);
         }
         @PostMapping("")
     public MessageGetResponse sendMessage(@RequestBody MessageCreateRequest messageCreateRequest) {

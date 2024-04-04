@@ -17,8 +17,10 @@ public class MessageService {
 
     private final MessageRepository messageRepository;
     private final ModelMapper modelMapper;
-    public List<MessageGetResponse> getMessages(Long user1Id, Long user2Id) {
+    public List<MessageGetResponse> getMessages(Long user1Id, Long user2Id, int page) {
         return messageRepository.getChat(user1Id, user2Id).stream()
+                .skip(page * 10)
+                .limit(10)
                 .map(message -> modelMapper.map(message, MessageGetResponse.class))
                 .toList();
     }
