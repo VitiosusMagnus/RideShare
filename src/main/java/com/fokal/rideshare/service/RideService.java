@@ -40,10 +40,14 @@ public class RideService {
     public RideGetResponse createRide(RideCreateRequest rideCreateRequest) {
         Ride ride = modelMapper.map(rideCreateRequest, Ride.class);
         ride.setActive(true);
+        ride.setWaitingRoom(null);
+        ride.setId(null);
+        ride = rideRepository.save(ride);
         WaitingRoom waitingRoom = new WaitingRoom();
         waitingRoom.setRide(ride);
+        waitingRoom.setId(null);
         waitingRoomService.createWaitingRoom(waitingRoom);
-        return modelMapper.map(rideRepository.save(ride), RideGetResponse.class);
+        return modelMapper.map(ride, RideGetResponse.class);
     }
 
     public void softDeleteRide(Long id) {
