@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin));
 
 
-        http.httpBasic(Customizer.withDefaults());
+        http.httpBasic(Customizer.withDefaults());  
         return http.build();
     }
 

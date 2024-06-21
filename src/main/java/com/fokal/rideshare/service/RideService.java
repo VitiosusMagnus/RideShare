@@ -8,8 +8,10 @@ import com.fokal.rideshare.model.WaitingRoom;
 import com.fokal.rideshare.repository.RideRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -86,5 +88,17 @@ public class RideService {
 
     public void getWaitingRoomByRideId(Long id) {
         waitingRoomService.getWaitingRoomByRideId(id);
+    }
+
+    // every 10 minutes update active status of rides
+    @Scheduled(fixedRate = 600000)
+    private void updateRideStatus(){
+        rideRepository.findAll().forEach(ride -> {
+            if(ride.getDepartureTime().isBefore(LocalDateTime.now())){
+                waitingRoomService.deleteWaitingRoom(ride.getWaitingRoom().getId());
+                ride.setActive(false);
+                rideRepository.save(ride);
+            }
+        });
     }
 }

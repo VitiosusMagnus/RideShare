@@ -50,4 +50,8 @@ public class WaitingRoomService {
         waitingRoomRepository.save(waitingRoom);
     }
 
+    protected void deleteWaitingRoom(Long id) {
+        waitingRoomRepository.deleteById(id);
+    }
+
 }

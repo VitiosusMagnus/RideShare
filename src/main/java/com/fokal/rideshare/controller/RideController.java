@@ -13,11 +13,13 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/api/rides")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class RideController {
 
         private final RideService rideService;
 
         @GetMapping("")
+
         public List<RideGetAllResponse> getAllRides() {
             return rideService.getAllActiveRides();
         }
